@@ -96,8 +96,10 @@ public class UserController {
         }
         try{
             PostUserRes postUserRes = userService.createUser(postUserReq);
+            System.out.println("잘왔나");
             return new BaseResponse<>(postUserRes);
         } catch(BaseException exception){
+            System.out.println("여기 controller오류남??");
             return new BaseResponse<>((exception.getStatus()));
         }
     }

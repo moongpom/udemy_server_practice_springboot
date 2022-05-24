@@ -65,14 +65,17 @@ public class PostController {
     public BaseResponse<PostPostsRes> createPost(@RequestBody PostPostsReq postPostsReq) {
 
         try{//형식적 validation
-
+            int userIdxByJwt = jwtService.getUserIdx();
+                if(postPostsReq.getUserIdx()!=userIdxByJwt){
+                    return new BaseResponse<>(BaseResponseStatus.INVALID_USER_JWT);
+                }
             if(postPostsReq.getContent().length()>450){
                 return new BaseResponse<>(BaseResponseStatus.POST_POSTS_INVALID_CONTENTS);
             }
             if(postPostsReq.getPostImgUrl().size()<1){
                 return new BaseResponse<>(BaseResponseStatus.POST_POSTS_EMPTY_IMGURL);
             }
-            //int userIdxByJwt = jwtService.getUserIdx();
+            //
             PostPostsRes postPostsRes = postService.createPost(postPostsReq.getUserIdx(),postPostsReq);//나중에 jwt
 
             return new BaseResponse<>(postPostsRes);

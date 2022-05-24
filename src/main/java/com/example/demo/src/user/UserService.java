@@ -50,17 +50,21 @@ public class UserService {
         String pwd;
         try{
             //암호화
-            pwd = new SHA256().encrypt(postUserReq.getPassword());  postUserReq.setPassword(pwd);
+            pwd = new SHA256().encrypt(postUserReq.getPwd());  postUserReq.setPwd(pwd);
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
         try{
+            System.out.println("여기는 userservice야");
             int userIdx = userDao.createUser(postUserReq);
             //jwt 발급.
+            System.out.println("userIdx 담음");
             // TODO: jwt는 다음주차에서 배울 내용입니다!
             String jwt = jwtService.createJwt(userIdx);
+            System.out.println("jwt 담음");
             return new PostUserRes(jwt,userIdx);
         } catch (Exception exception) {
+            System.out.println("여기userservice오류남??");
             throw new BaseException(DATABASE_ERROR);
         }
     }

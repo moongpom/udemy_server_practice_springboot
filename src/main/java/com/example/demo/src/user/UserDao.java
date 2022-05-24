@@ -92,7 +92,7 @@ public class UserDao {
 
 */
     public GetUserRes getUsersByIdx(int userIdx){
-        String getUsersByIdxQuery = "select userIdx,name,nickName,email from User where userIdx=?";
+        String getUsersByIdxQuery = "select userIdx,name,nickName,email from User where userIdx=?;";
         int getUsersByIdxParams = userIdx;
         return this.jdbcTemplate.queryForObject(getUsersByIdxQuery,
                 (rs, rowNum) -> new GetUserRes(
@@ -103,13 +103,16 @@ public class UserDao {
                 getUsersByIdxParams);
     }
 
-    public int createUser(PostUserReq postUserReq){
-        String createUserQuery = "insert into User (name, nickName, phone, email, password) VALUES (?,?,?,?,?)";
-        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getNickName(),postUserReq.getPhone(), postUserReq.getEmail(), postUserReq.getPassword()};
-        this.jdbcTemplate.update(createUserQuery, createUserParams);
 
-        String lastInserIdQuery = "select last_insert_id()";
-        return this.jdbcTemplate.queryForObject(lastInserIdQuery,int.class);
+    public int createUser(PostUserReq postUserReq){
+        System.out.println("여긴 userdao");
+        String createUserQuery = "insert into User(name, nickName,  introduction, email, pwd) VALUES (?,?,?,?,?);";
+        Object[] createUserParams = new Object[]{postUserReq.getName(), postUserReq.getNickName(),postUserReq.getIntroduction(), postUserReq.getEmail(), postUserReq.getPwd()};
+        System.out.println("createUserParams "+ createUserParams);
+        this.jdbcTemplate.update(createUserQuery, createUserParams);
+        String lastInsertIdQuery = "select last_insert_id()";
+        System.out.println("lastInserIdQuery 오륜가");
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery,int.class);
     }
 
     public int checkEmail(String email){

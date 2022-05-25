@@ -59,6 +59,7 @@ public class AuthProvider {
         //}
     }
 
+
     // 로그인
   /*  public PostLoginRes login(PostLoginReq postLoginReq) throws BaseException{
         User user = authDao.getPwd(postLoginReq);

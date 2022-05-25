@@ -9,5 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetAutoLoginRes {
     private int userIdx;
-
+    private String autoSuc;
 }

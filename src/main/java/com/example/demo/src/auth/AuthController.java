@@ -76,17 +76,16 @@ public class AuthController {
             }
             else if(jwtService.checkJwt(jwtService.getJwt())==1){
                 return new BaseResponse<>(INVALID_JWT);
-
             }
             else{
                 System.out.println("autologin 오류없이 시작");
                 String jwt=jwtService.getJwt();
-                System.out.println("1autologin - getJwt"+jwt);
+              //  System.out.println("1autologin - getJwt"+jwt);
                 int userIdx=jwtService.getUserIdx();
-                System.out.println("2autologin - jwtService.getUserIdx()" + userIdx);
-                GetAutoLoginRes getAutoRes = new GetAutoLoginRes(userIdx);
-                System.out.println("3autologin - getAutoRes" + getAutoRes);
-                System.out.println("자아도옹로오그으이인");
+               // System.out.println("2autologin - jwtService.getUserIdx()" + userIdx);
+                String autoSuc = "자동로그인상태입니다";
+                GetAutoLoginRes getAutoRes = new GetAutoLoginRes(userIdx,autoSuc);
+               // System.out.println("3autologin - getAutoRes" + getAutoRes);
                 return new BaseResponse<>(getAutoRes);
             }
 

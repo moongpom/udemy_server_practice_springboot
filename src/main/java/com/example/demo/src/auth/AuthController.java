@@ -4,6 +4,7 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.auth.model.*;
 import com.example.demo.utils.JwtService;
+import java.io.UnsupportedEncodingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,29 +67,35 @@ public class AuthController {
         }
     }
 
-   /* @ResponseBody
-    @GetMapping("/jwt")
+    @ResponseBody
+    @GetMapping("/autologin")
     public BaseResponse<GetAutoLoginRes> autologin() throws BaseException{
         try{
             if(jwtService.getJwt()==null){
                 return new BaseResponse<>(EMPTY_JWT);
             }
-            else if(authProvider.checkJwt(jwtService.getJwt())==1){
+            else if(jwtService.checkJwt(jwtService.getJwt())==1){
                 return new BaseResponse<>(INVALID_JWT);
 
             }
-
             else{
+                System.out.println("autologin 오류없이 시작");
                 String jwt=jwtService.getJwt();
+                System.out.println("1autologin - getJwt"+jwt);
                 int userIdx=jwtService.getUserIdx();
-                GetAutoLoginRes getAutoRes = userProvider.getAuto(jwt,userIdx);
+                System.out.println("2autologin - jwtService.getUserIdx()" + userIdx);
+                GetAutoLoginRes getAutoRes = new GetAutoLoginRes(userIdx);
+                System.out.println("3autologin - getAutoRes" + getAutoRes);
+                System.out.println("자아도옹로오그으이인");
                 return new BaseResponse<>(getAutoRes);
             }
 
         }catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
 
-    }*/
+    }
 
 }
